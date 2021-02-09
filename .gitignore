@@ -1,0 +1,21 @@
+.metadata
+*.db
+build
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+*.iml
+.idea/
+
+# Other
+log/
+*.log
+bin/
+logs/
+
+# Project Specific
+testeronii.txt
