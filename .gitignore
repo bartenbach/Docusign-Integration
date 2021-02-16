@@ -11,6 +11,10 @@ build
 *.iml
 .idea/
 
+# Gradle
+.gradle
+/build/
+
 # Other
 log/
 *.log
