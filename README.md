@@ -14,3 +14,14 @@ http://localhost:8080/builder?builderName=Enter%20name%20here
 This endpoint returns all documents that belong to the builder specified in builderName.
 The mock data should return data from this endpoint:
 http://localhost:8080/builder?builderName=Blake%20Bartenbach
+
+## client
+To start Docusign client, enter the client directory
+`cd client`
+If it's your first time, download web dependencies
+`npm install`
+Otherwise, run the client with
+`npm start`
+
+### client Web endpoints
+http://localhost:3000 ReactJS web app homepage.
