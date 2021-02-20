@@ -1,10 +1,10 @@
-language: java
-language: node_js
-  - node
+matrix:
+  include:
+    - language: node.js
+      node_js: 15
+    - language: java
+      jdk: openjdk15
+        - script: gradle build
 
 os: linux
 dist: trusty
-jdk: openjdk15
-
-script:
-  - ./gradlew build -s
