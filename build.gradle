@@ -67,6 +67,10 @@ task deployClient(type: Copy) {
    into "${project.projectDir}/src/main/resources"
 }
 
+clean {
+    delete 'src/main/webapp/node_modules'
+}
+
 npmBuild.dependsOn npmInstall
 npmBuild.dependsOn npmTest
 deployClient.dependsOn npmBuild

@@ -1,5 +1,6 @@
 language: java
-install: skip
+language: node_js
+  - node
 
 os: linux
 dist: trusty
