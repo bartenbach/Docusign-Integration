@@ -1,2 +1,3 @@
 rootProject.name = 'docusign-prototype-server'
 include 'server'
+include 'client'
