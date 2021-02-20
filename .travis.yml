@@ -1,10 +1,11 @@
-matrix:
+os: linux
+jobs:
   include:
-    - language: node.js
-      node_js: 15
+    - language: node_js
+      node_js: node
+      script:
+        - ./gradlew buildClient
     - language: java
       jdk: openjdk15
-        - script: gradle build
-
-os: linux
-dist: trusty
+      script:
+        - ./gradlew buildServer

@@ -2,7 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.4.2'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
-    id 'com.moowork.node' version '1.3.1'
+    id "com.github.node-gradle.node" version "3.0.1"
 }
 
 group = 'edu.unomaha.docusign'
@@ -17,6 +17,7 @@ sourceSets {
     main {
         java {
             srcDirs = [ 'src/main/java' ]
+            exclude 'src/main/webapp'
         }
     }
     test {
@@ -39,9 +40,7 @@ dependencies {
 }
 
 node {
-    npmWorkDir = file("${project.projectDir}/src/main/webapp")
-    workDir = file("${project.projectDir}/src/main/webapp")
-    nodeModulesDir = file("${project.projectDir}/src/main/webapp")
+    nodeProjectDir = file("${project.projectDir}/src/main/webapp")
     download = false
 }
 
@@ -49,17 +48,22 @@ test {
 	useJUnitPlatform()
 }
 
-task npmBuild(type: NpmTask) {
-    description = "Builds app for production"
+task buildReactApp(type: NpxTask){
+    dependsOn npmInstall
+    description = "Builds React client"
     workingDir = file("${project.projectDir}/src/main/webapp")
-    args = ["run","build"]
+    command = 'npx'
+    args = ['react-scripts', 'build']
+    inputs.files('package.json', 'package-lock.json')
+    inputs.dir('src')
+    inputs.dir(fileTree("${project.projectDir}/src/main/webapp/node_modules").exclude(".cache"))
+    outputs.dir('dist')
 }
 
-task npmTest(type: NpmTask) {
-    description = "Runs javascript tests with npm" 
+npm_test {
+    description = "Runs javascript tests with npm"
     workingDir = file("${project.projectDir}/src/main/webapp")
     environment = ['CI': 'true']
-    args = ["run", "test"]
 }
 
 task deployClient(type: Copy) {
@@ -67,14 +71,26 @@ task deployClient(type: Copy) {
    into "${project.projectDir}/src/main/resources"
 }
 
+task buildClient() {
+    dependsOn npmInstall
+    dependsOn buildReactApp
+    dependsOn npm_test
+}
+
+task buildServer() {
+    dependsOn compileJava
+    dependsOn compileTestJava
+}
+
 clean {
     delete 'src/main/webapp/node_modules'
 }
 
-npmBuild.dependsOn npmInstall
-npmBuild.dependsOn npmTest
-deployClient.dependsOn npmBuild
-compileJava.dependsOn deployClient
+bootRun.dependsOn npmInstall
+bootRun.dependsOn npm_test
+bootRun.dependsOn buildReactApp
+bootRun.dependsOn compileJava
+bootRun.dependsOn compileTestJava
 bootRun.dependsOn deployClient
 bootRun.dependsOn test
 bootRun.dependsOn compileJava

@@ -12,9 +12,10 @@
     "web-vitals": "^1.1.0"
   },
   "scripts": {
+    "pre-run": "npm install",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --transformIgnorePatterns \"node_modules\"",
+    "test": "npx react-scripts test --transformIgnorePatterns \"node_modules\"",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
