@@ -91,4 +91,4 @@ bootRun.dependsOn compileJava
 bootRun.dependsOn compileTestJava
 bootRun.dependsOn deployClient
 bootRun.dependsOn test
-//bootRun.dependsOn compileJava
+bootRun.dependsOn compileJava
