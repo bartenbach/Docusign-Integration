@@ -55,9 +55,7 @@ task buildReactApp(type: NpxTask){
     command = 'npx'
     args = ['react-scripts', 'build']
     inputs.files('package.json', 'package-lock.json')
-    inputs.dir('src')
     inputs.dir(fileTree("${project.projectDir}/src/main/webapp/node_modules").exclude(".cache"))
-    outputs.dir('dist')
 }
 
 npm_test {
@@ -68,7 +66,7 @@ npm_test {
 
 task deployClient(type: Copy) {
    from "${project.projectDir}/src/main/webapp/build"
-   into "${project.projectDir}/src/main/resources"
+   into "${project.projectDir}/src/main/resources/static"
 }
 
 task buildClient() {
@@ -93,4 +91,4 @@ bootRun.dependsOn compileJava
 bootRun.dependsOn compileTestJava
 bootRun.dependsOn deployClient
 bootRun.dependsOn test
-bootRun.dependsOn compileJava
+//bootRun.dependsOn compileJava

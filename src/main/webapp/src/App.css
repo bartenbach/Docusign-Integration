@@ -3,7 +3,7 @@
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 20vmin;
   pointer-events: none;
 }
 
@@ -15,17 +15,38 @@
 
 .App-header {
   background-color: #282c34;
+  grid-template-columns: auto auto;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  display: grid;
   align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
 }
 
+.col-right {
+  grid-column-start: 1;
+  padding: 20px;
+}
+
+.col-left {
+  grid-column-start: 2;
+  padding: 20px;
+}
+
 .App-link {
   color: #61dafb;
+}
+
+button {
+  background: #61dafb;
+  color: black;
+  font-size: calc(5px + 2vmin);
+  height: 30px;
+}
+
+iframe {
+  width: 100%;
+  min-height: 80vh;
 }
 
 @keyframes App-logo-spin {
