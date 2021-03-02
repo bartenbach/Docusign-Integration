@@ -43,20 +43,20 @@ public class Document {
     @Column(name = "last_modified")
     private Date lastModified;
 
-    public byte[] getDocument() {
-        return this.document;
-    }
-
-    public String getBuilderName() {
-        return this.builder_name;
-    }
-
     public static String getFindAllDocuments() {
         return FIND_ALL_DOCUMENTS;
     }
 
     public static String getFindByBuilder() {
         return FIND_BY_BUILDER;
+    }
+
+    public byte[] getDocument() {
+        return this.document;
+    }
+
+    public String getBuilderName() {
+        return this.builder_name;
     }
 
 }

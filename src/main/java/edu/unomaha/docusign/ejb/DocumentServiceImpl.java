@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-
 public class DocumentServiceImpl implements DocumentService {
 
     @Autowired
@@ -27,4 +26,5 @@ public class DocumentServiceImpl implements DocumentService {
     public List<Document> getAllDocuments() {
         return documentDao.findAllDocuments();
     }
+
 }
