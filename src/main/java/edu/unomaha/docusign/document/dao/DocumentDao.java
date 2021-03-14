@@ -1,6 +1,6 @@
-package edu.unomaha.docusign.dao;
+package edu.unomaha.docusign.document.dao;
 
-import edu.unomaha.docusign.entities.Document;
+import edu.unomaha.docusign.document.entities.Document;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

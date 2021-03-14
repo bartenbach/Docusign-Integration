@@ -1,6 +1,6 @@
-package edu.unomaha.docusign.interfaces;
+package edu.unomaha.docusign.document.interfaces;
 
-import edu.unomaha.docusign.entities.Document;
+import edu.unomaha.docusign.document.entities.Document;
 
 import java.util.List;
 

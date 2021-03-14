@@ -1,4 +1,4 @@
-package edu.unomaha.docusign.rest;
+package edu.unomaha.docusign.auth;
 
 public class AuthenticationEndpoint {
 
