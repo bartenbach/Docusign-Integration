@@ -74,7 +74,7 @@ task deployClient(type: Copy) {
 task buildClient() {
     dependsOn npmInstall
     dependsOn buildReactApp
-    dependsOn npm_test
+//    dependsOn npm_test
 }
 
 task buildServer() {
@@ -87,7 +87,7 @@ clean {
 }
 
 bootRun.dependsOn npmInstall
-bootRun.dependsOn npm_test
+//bootRun.dependsOn npm_test
 bootRun.dependsOn buildReactApp
 bootRun.dependsOn compileJava
 bootRun.dependsOn compileTestJava
