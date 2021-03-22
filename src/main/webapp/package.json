@@ -1,8 +1,9 @@
 {
-  "name": "client",
+  "name": "docusign-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.1",
@@ -10,8 +11,11 @@
     "@types/node": "^14.14.31",
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.1",
+    "docusign-esign": "5.8.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-icons": "^4.2.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
     "typescript": "^4.2.2",
     "web-vitals": "^1.1.0"
@@ -41,5 +45,11 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:8080"
+  "engines": {
+    "node": "*"
+  },
+  "proxy": "http://localhost:8080",
+  "devDependencies": {
+    "@types/react-router-dom": "^5.1.7"
+  }
 }

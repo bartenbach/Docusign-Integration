@@ -32,6 +32,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'com.docusign:docusign-esign-java:3.11.0-RC2'
 	runtimeOnly 'com.h2database:h2'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
@@ -73,7 +74,7 @@ task deployClient(type: Copy) {
 task buildClient() {
     dependsOn npmInstall
     dependsOn buildReactApp
-    dependsOn npm_test
+//    dependsOn npm_test
 }
 
 task buildServer() {
@@ -86,7 +87,7 @@ clean {
 }
 
 bootRun.dependsOn npmInstall
-bootRun.dependsOn npm_test
+//bootRun.dependsOn npm_test
 bootRun.dependsOn buildReactApp
 bootRun.dependsOn compileJava
 bootRun.dependsOn compileTestJava

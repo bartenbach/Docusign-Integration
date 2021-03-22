@@ -1,8 +1,8 @@
-package edu.unomaha.docusign.ejb;
+package edu.unomaha.docusign.document.ejb;
 
-import edu.unomaha.docusign.dao.DocumentDao;
-import edu.unomaha.docusign.entities.Document;
-import edu.unomaha.docusign.interfaces.DocumentService;
+import edu.unomaha.docusign.document.dao.DocumentDao;
+import edu.unomaha.docusign.document.entities.Document;
+import edu.unomaha.docusign.document.interfaces.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

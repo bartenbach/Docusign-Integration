@@ -1,4 +1,4 @@
-package edu.unomaha.docusign.rest;
+package edu.unomaha.docusign.document.rest;
 
 import edu.unomaha.docusign.document.ejb.DocumentServiceImpl;
 import edu.unomaha.docusign.document.entities.Document;
