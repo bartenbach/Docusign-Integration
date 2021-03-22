@@ -1,6 +1,6 @@
 import BtButton from "./BtButton";
 
-const token_url: string = "http://localhost:8080/api/auth";
+const token_url: string = "/api/auth";
 
 const Login = () => {
   const onClick = () => {
