@@ -14,9 +14,13 @@ src/main/resources/*.txt
 .project
 .settings/
 
+# Vscode
+.vscode/*
+
 # Intellij
 *.iml
 .idea/
+*.DS_Store
 
 # Gradle
 .gradle

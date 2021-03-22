@@ -1,7 +1,7 @@
-package edu.unomaha.docusign.rest;
+package edu.unomaha.docusign.document.rest;
 
-import edu.unomaha.docusign.ejb.DocumentServiceImpl;
-import edu.unomaha.docusign.entities.Document;
+import edu.unomaha.docusign.document.ejb.DocumentServiceImpl;
+import edu.unomaha.docusign.document.entities.Document;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

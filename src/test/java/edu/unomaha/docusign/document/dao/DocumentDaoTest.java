@@ -1,6 +1,6 @@
-package edu.unomaha.docusign.dao;
+package edu.unomaha.docusign.document.dao;
 
-import edu.unomaha.docusign.entities.Document;
+import edu.unomaha.docusign.document.entities.Document;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
