@@ -48,7 +48,6 @@ public class AuthenticationEndpoint {
      * 
      * @param code - the authorization code
      * @return string containing the response payload and access_token
-     * @throws Exception
      */
     @RequestMapping("/token")
     public String getToken(@RequestParam(name = "code") String code) {
