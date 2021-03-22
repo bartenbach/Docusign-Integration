@@ -22,6 +22,7 @@
   },
   "scripts": {
     "pre-run": "npm install",
+    "doc": "react-doc-generator ./src -o DOCUMENTATION.md -x js,jsx,ts,tsx",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "npx react-scripts test --transformIgnorePatterns \"node_modules\"",
@@ -50,6 +51,8 @@
   },
   "proxy": "http://localhost:8080",
   "devDependencies": {
-    "@types/react-router-dom": "^5.1.7"
+    "@types/react-router-dom": "^5.1.7",
+    "react-doc-generator": "^1.2.5",
+    "react-docgen": "^5.3.1"
   }
 }
