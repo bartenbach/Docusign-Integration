@@ -1,19 +1,31 @@
+import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import BtButton from "./BtButton";
+import { Builder } from "./Builder";
+import { HomeOwner } from "./HomeOwner";
 
-const token_url: string = "/api/auth";
-
-const Login = () => {
-  const onClick = () => {
-    console.log("clicked!");
-  };
-
+export default function Login() {
   return (
-    <div className="App">
-      <h2>Login</h2>
-      <BtButton text="Homeowner" onClick={() => onClick} href={token_url} />
-      <BtButton text="Builder" onClick={() => onClick} href={token_url} />
-    </div>
+    <Router>
+      <div className="App">
+        <Link to="/homeowner">
+          <BtButton text="Homeowner" />
+        </Link>
+        <Link to="/builder">
+          <BtButton text="Builder" />
+        </Link>
+        <hr />
+        <Switch>
+          <Route exact path="/">
+            <Login />
+          </Route>
+          <Route path="/homeowner">
+            <HomeOwner />
+          </Route>
+          <Route path="/builder">
+            <Builder />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
-};
-
-export default Login;
+}
