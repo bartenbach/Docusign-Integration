@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import BtButton from "./BtButton";
 import { Builder } from "./Builder";
 import { HomeOwner } from "./HomeOwner";
+import {Authenticated} from "./Authenticated";
 
 export default function Login() {
   return (
@@ -23,6 +24,9 @@ export default function Login() {
           </Route>
           <Route path="/builder">
             <Builder />
+          </Route>
+          <Route path="/authenticated>">
+            <Authenticated />
           </Route>
         </Switch>
       </div>

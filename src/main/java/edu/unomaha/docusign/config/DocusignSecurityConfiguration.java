@@ -7,18 +7,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
-@Configuration
-@EnableWebSecurity
+
 public class DocusignSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests(authorize -> authorize
-                        .antMatchers("/builder/**", "/homeowner/**")
-                        .authenticated()
-                )
-                .formLogin(withDefaults())
-                .httpBasic(withDefaults());
+                .oauth2Login(withDefaults());
     }
 }
