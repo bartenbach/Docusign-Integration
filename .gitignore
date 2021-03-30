@@ -1,15 +1,33 @@
 .metadata
 *.db
 build
+src/main/webapp/node_modules
+src/main/resources/static
+src/main/resources/*.json
+src/main/resources/*.ico
+src/main/resources/*.html
+src/main/resources/*.png
+src/main/resources/*.txt
 
 # Eclipse
 .classpath
 .project
 .settings/
 
+# Vscode
+.vscode/*
+
 # Intellij
 *.iml
 .idea/
+*.DS_Store
+
+# Gradle
+.gradle
+/build/
+
+# NODE
+node_modules/
 
 # Other
 log/
