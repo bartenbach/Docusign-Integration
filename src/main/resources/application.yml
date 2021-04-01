@@ -22,9 +22,10 @@ spring:
             client-id: 5f178629-92f1-431f-a323-3b6852e823a0
             client-secret: 8f02b844-499f-460f-bda9-f354f5f2ce05
             authorization-grant-type: authorization_code
-            redirectUri: "{baseUrl}/oauth2/authorization/docusign"
+            redirectUri: "{baseUrl}/login/oauth2/code/{registrationId}"
         provider:
           docusign:
             authorization-uri: https://account-d.docusign.com/oauth/auth
             token-uri: https://account-d.docusign.com/oauth/token
             user-info-uri: https://account-d.docusign.com/oauth/userinfo
+            user-name-attribute: sub

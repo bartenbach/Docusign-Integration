@@ -6,7 +6,11 @@ import {Authenticated} from "./Authenticated";
 
 export default function Login() {
   return (
-    <Router>
+      <div>
+        <BtButton text="Homeowner" />
+        <BtButton text="Builder" />
+      </div>
+/*    <Router>
       <div className="App">
         <Link to="/homeowner">
           <BtButton text="Homeowner" />
@@ -30,6 +34,6 @@ export default function Login() {
           </Route>
         </Switch>
       </div>
-    </Router>
+    </Router>*/
   );
 }
