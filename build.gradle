@@ -34,9 +34,11 @@ javadoc {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    //implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.security:spring-security-test'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'com.docusign:docusign-esign-java:3.11.0-RC2'
 	runtimeOnly 'com.h2database:h2'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
@@ -70,7 +72,12 @@ npm_test {
     environment = ['CI': 'true']
 }
 
+task cleanClient(type: Delete) {
+    delete "${project.projectDir}/src/main/resources/static/*"
+}
+
 task deployClient(type: Copy) {
+   cleanClient
    from "${project.projectDir}/src/main/webapp/build"
    into "${project.projectDir}/src/main/resources/static"
 }
