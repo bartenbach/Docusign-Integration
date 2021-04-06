@@ -25,7 +25,12 @@ public class Application extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/", "/login**", "/error**", "/oauth2/authorization/docusign**").permitAll()
+        http.authorizeRequests().antMatchers("/*",
+                "/static/**",
+                "/login**",
+                "/error**",
+                "/oauth2/authorization/docusign**")
+                .permitAll()
                 .anyRequest().authenticated()
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/")
                 .and().oauth2Login();
