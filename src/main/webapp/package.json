@@ -27,7 +27,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "npx react-scripts test --transformIgnorePatterns \"node_modules\"",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start:dev": "webpack serve --config ./webpack.config.js --hot --inline"
   },
   "eslintConfig": {
     "extends": [
@@ -53,7 +54,10 @@
   "proxy": "http://localhost:8080",
   "devDependencies": {
     "@types/react-router-dom": "^5.1.7",
+    "css-loader": "^4.3.0",
     "react-doc-generator": "^1.2.5",
-    "react-docgen": "^5.3.1"
+    "react-docgen": "^5.3.1",
+    "ts-loader": "^8.1.0",
+    "webpack-cli": "^4.6.0"
   }
 }

@@ -7,7 +7,7 @@ plugins {
 
 group = 'edu.unomaha.docusign'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '15'
+sourceCompatibility = '11'
 
 repositories {
 	mavenCentral()
@@ -34,7 +34,6 @@ javadoc {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-    //implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     implementation 'org.springframework.security:spring-security-test'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -53,7 +52,7 @@ node {
 }
 
 test {
-	useJUnitPlatform()
+  useJUnitPlatform()
 }
 
 task buildReactApp(type: NpxTask){
