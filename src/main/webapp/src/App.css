@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:regular,bold,italic&subset=latin,latin-ext');
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:regular,bold,italic&subset=latin,latin-ext");
 
 .App {
   text-align: center;
@@ -44,18 +44,4 @@ button {
   color: black;
   font-size: calc(5px + 2vmin);
   height: 30px;
-}
-
-iframe {
-  width: 100%;
-  min-height: 80vh;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
