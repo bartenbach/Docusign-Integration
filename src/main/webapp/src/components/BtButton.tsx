@@ -1,11 +1,13 @@
-import { Button } from "@material-ui/core";
+import { Box, Button } from "@material-ui/core";
 import React from "react";
 
 export const BtButton: React.FC<Props> = (props) => {
   return (
-    <Button variant="contained" color="primary" href={props.link}>
-      {props.text}
-    </Button>
+    <Box m={1} display="inline-block">
+      <Button variant="contained" color="primary" href={props.link}>
+        {props.text}
+      </Button>
+    </Box>
   );
 };
 

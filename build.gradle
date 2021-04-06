@@ -73,6 +73,7 @@ npm_test {
 
 task cleanClient(type: Delete) {
     delete "${project.projectDir}/src/main/resources/static/*"
+    delete "${project.projectDir}/src/main/webapp/build/*"
 }
 
 task deployClient(type: Copy) {
