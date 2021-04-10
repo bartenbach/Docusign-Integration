@@ -1,8 +1,8 @@
-export default function embeddedSigning() {
+export default function EmbeddedSigning() {
   return (
     <form action="" method="post" data-busy="form">
       <div>
-      <h1>Docusign Prototype [Embedded Signing]</h1>
+      <h1>Docusign Prototype</h1>
         <label htmlFor="signerEmail">Signer Email</label>
         <input type= "email" className="form-control" id="signerEmail" name="signerEmail"
         placeholder="email@domain.com" required value="<%= locals.dsConfig.signerEmail %>">
