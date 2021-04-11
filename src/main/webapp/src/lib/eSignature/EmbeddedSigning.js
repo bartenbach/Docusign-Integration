@@ -1,14 +1,20 @@
-const path = require('path')
+/**
+ * @file
+ * Example 001: Use embedded signing
+ * @author DocuSign
+ */
+
+ const path = require('path')
  , fs = require('fs-extra')
  , docusign = require('docusign-esign')
  , validator = require('validator')
- , dsConfig = require('./config/index.js').config
 ;
 
-const embeddedSigning = exports
+const EmbeddedSigning = exports
+ , eg = 'eg001' // This example reference.
  , mustAuthenticate = '/ds/mustAuthenticate'
  , minimumBufferMin = 3
- , signerClientId = 1234 // The id of the signer within this application.
+ , signerClientId = 1000 // The id of the signer within this application.
  , demoDocsPath = path.resolve(__dirname, 'demo_documents')
  , pdf1File = 'World_Wide_Corp_lorem.pdf'
  , dsReturnUrl = dsConfig.appUrl + '/ds-return'
@@ -21,7 +27,7 @@ const embeddedSigning = exports
 * @param {object} req Request obj
 * @param {object} res Response obj
 */
-embeddedSigning.createController = async (req, res) => {
+EmbeddedSigning.createController = async (req, res) => {
  // Step 1. Check the token
  // At this point we should have a good token. But we
  // double-check here to enable a better UX to the user.
@@ -55,7 +61,7 @@ embeddedSigning.createController = async (req, res) => {
  ;
 
  try {
-     results = await embeddedSigning.worker (args)
+     results = await eg001EmbeddedSigning.worker (args)
  }
  catch (error) {
      let errorBody = error && error.response && error.response.body
@@ -65,7 +71,7 @@ embeddedSigning.createController = async (req, res) => {
      ;
      // In production, may want to provide customized error messages and
      // remediation advice to the user.
-     res.render('pages/error', {err: error, errorCode: errorCode, errorMessage: errorMessage});
+     res.render('error', {err: error, errorCode: errorCode, errorMessage: errorMessage});
  }
  if (results) {
      // Redirect the user to the embedded signing
@@ -83,7 +89,7 @@ embeddedSigning.createController = async (req, res) => {
 * @param {object} args
 */
 // ***DS.snippet.0.start
-embeddedSigning.worker = async (args) => {
+EmbeddedSigning.worker = async (args) => {
  // Data for this method
  // args.basePath
  // args.accessToken
@@ -243,14 +249,14 @@ function makeRecipientViewRequest(args) {
 /**
 * Form page for this application
 */
-embeddedSigning.getController = (req, res) => {
+EmbeddedSigning.getController = (req, res) => {
  console.log(req.dsAuth);
  // Check that the authentication token is ok with a long buffer time.
  // If needed, now is the best time to ask the user to authenticate
  // since they have not yet entered any information into the form.
  let tokenOK = req.dsAuth.checkToken();
  if (tokenOK) {
-     res.render('webapp/src/components/embeddedSigning', {
+     res.render('components/EmbeddedSigning', {
          eg: eg, csrfToken: req.csrfToken(),
          title: "Use embedded signing",
          sourceFile: path.basename(__filename),
