@@ -39,6 +39,13 @@
   color: #61dafb;
 }
 
+div.container {
+  text-align: center;
+  width: 400px;
+  padding:auto;
+  margin: 0 auto;
+}
+
 button {
   background: #61dafb;
   color: black;
