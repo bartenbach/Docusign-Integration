@@ -1,4 +1,4 @@
-import BtButton from "./BtButton";
+import BtButton from "../shared/BtButton";
 
 export default function Login() {
   return (

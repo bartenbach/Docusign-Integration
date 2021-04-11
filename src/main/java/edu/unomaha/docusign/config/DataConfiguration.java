@@ -1,6 +1,6 @@
 package edu.unomaha.docusign.config;
 
-import edu.unomaha.docusign.document.ejb.DocumentServiceImpl;
+import edu.unomaha.docusign.project.ejb.ProjectServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Configuration;
 public class DataConfiguration {
 
     @Bean
-    public DocumentServiceImpl getDocumentServiceImpl() {
-        return new DocumentServiceImpl();
+    public ProjectServiceImpl getDocumentServiceImpl() {
+        return new ProjectServiceImpl();
     }
 
 }

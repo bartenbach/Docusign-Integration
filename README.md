@@ -10,7 +10,7 @@ This will install dependencies, build the app, run the tests, deploy it, test th
 Once the server is up, proceed to http://localhost:8080
 
 ### REST API Endpoints
-http://localhost:8080/api/all JSON structure containing every document in the database (for testing mainly, we should probably get rid of this eventually)
+http://localhost:8080/api/all JSON structure containing every project in the database (for testing mainly, we should probably get rid of this eventually)
 
 http://localhost:8080/api/builder?builderName=Enter%20name%20here
 This endpoint returns all documents that belong to the builder specified in builderName.

@@ -103,5 +103,6 @@ bootRun.dependsOn buildReactApp
 bootRun.dependsOn compileJava
 bootRun.dependsOn compileTestJava
 bootRun.dependsOn deployClient
+deployClient.dependsOn buildReactApp
 bootRun.dependsOn test
 bootRun.dependsOn compileJava
