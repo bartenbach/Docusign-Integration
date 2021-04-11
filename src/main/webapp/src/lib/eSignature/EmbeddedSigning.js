@@ -7,9 +7,8 @@
 const path = require("path"),
   fs = require("fs-extra"),
   docusign = require("docusign-esign"),
-  validator = require("validator"),
-  dsConfig = require("./config/index.js").config;
-const eg001EmbeddedSigning = exports,
+  validator = require("validator");
+const EmbeddedSigning = exports,
   eg = "eg001", // This example reference.
   mustAuthenticate = "/ds/mustAuthenticate",
   minimumBufferMin = 3,
@@ -23,7 +22,7 @@ const eg001EmbeddedSigning = exports,
  * @param {object} req Request obj
  * @param {object} res Response obj
  */
-eg001EmbeddedSigning.createController = async (req, res) => {
+EmbeddedSigning.createController = async (req, res) => {
   // Step 1. Check the token
   // At this point we should have a good token. But we
   // double-check here to enable a better UX to the user.
@@ -63,7 +62,7 @@ eg001EmbeddedSigning.createController = async (req, res) => {
       errorMessage = errorBody && errorBody.message;
     // In production, may want to provide customized error messages and
     // remediation advice to the user.
-    res.render("pages/error", {
+    res.render("error", {
       err: error,
       errorCode: errorCode,
       errorMessage: errorMessage,
@@ -84,7 +83,7 @@ eg001EmbeddedSigning.createController = async (req, res) => {
  * @param {object} args
  */
 // ***DS.snippet.0.start
-eg001EmbeddedSigning.worker = async (args) => {
+EmbeddedSigning.worker = async (args) => {
   // Data for this method
   // args.basePath
   // args.accessToken
@@ -246,14 +245,14 @@ function makeRecipientViewRequest(args) {
 /**
  * Form page for this application
  */
-eg001EmbeddedSigning.getController = (req, res) => {
+EmbeddedSigning.getController = (req, res) => {
   console.log(req.dsAuth);
   // Check that the authentication token is ok with a long buffer time.
   // If needed, now is the best time to ask the user to authenticate
   // since they have not yet entered any information into the form.
   let tokenOK = req.dsAuth.checkToken();
   if (tokenOK) {
-    res.render("pages/examples/eg001EmbeddedSigning", {
+    res.render("components/EmbeddedSigning", {
       eg: eg,
       csrfToken: req.csrfToken(),
       title: "Use embedded signing",
