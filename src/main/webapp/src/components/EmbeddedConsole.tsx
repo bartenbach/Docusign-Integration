@@ -1,4 +1,4 @@
-import BtButton from "./BtButton";
+import BtButton from "./shared/BtButton";
 import "../App.css";
 export default function EmbeddedConsole() {
   return (

@@ -1,5 +1,5 @@
-import BtButton from "./BtButton";
 import "../App.css";
+import BtButton from "./shared/BtButton";
 
 export default function EmbeddedSigning() {
   return (
