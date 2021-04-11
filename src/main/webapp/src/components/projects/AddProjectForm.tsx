@@ -1,5 +1,5 @@
-import { Button } from "@material-ui/core";
 import React, { useState } from "react";
+import BtButton from "../shared/BtButton";
 
 const AddProjectForm = (props: any) => {
   const initialFormState = { projectName: "" };
@@ -30,7 +30,7 @@ const AddProjectForm = (props: any) => {
         onChange={handleInputChange}
         placeholder="Project name"
       />
-      <Button type="submit">Submit</Button>
+      <BtButton type="submit" text="Submit" link="" />
     </form>
   );
 };

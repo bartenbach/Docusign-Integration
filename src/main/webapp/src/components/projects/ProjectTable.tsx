@@ -16,8 +16,12 @@ const ProjectTable = (props: { projects: any[]; deleteProject: any }) => (
             <td>{data.projectName}</td>
             <td>{data.projectId}</td>
             <td>
-              <BtButton text="Edit" link="/" />
-              <BtButton text="Delete" link="/" />
+              <BtButton text="Edit" link="" />
+              <BtButton
+                text="Delete"
+                clickfn={() => props.deleteProject(data.projectName)}
+                link=""
+              />
             </td>
           </tr>
         ))
