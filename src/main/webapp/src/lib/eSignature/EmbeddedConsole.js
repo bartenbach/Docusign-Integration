@@ -1,29 +1,28 @@
 /**
  * @file
- * Example 011: Use embedded sending: Remote signer, cc, envelope has three documents
+ * Example 012: Embedded NDSE (console)
  * @author DocuSign
  */
 
  const path = require('path')
- , docusign = require('docusign-esign')
  , validator = require('validator')
+ , docusign = require('docusign-esign')
  , dsConfig = require('../../config/index.js').config
- , eg002 = require('./eg002SigningViaEmail') // used to create envelope
  ;
 
-const eg011EmbeddedSending = exports
- , eg = 'eg011' // This example reference.
+const EmbeddedConsole = exports
+ , eg = 'eg012' // This example reference.
  , mustAuthenticate = '/ds/mustAuthenticate'
  , minimumBufferMin = 3
  , dsReturnUrl = dsConfig.appUrl + '/ds-return'
  ;
 
 /**
-* Create the envelope
+* The controller
 * @param {object} req Request obj
 * @param {object} res Response obj
 */
-eg011EmbeddedSending.createController = async (req, res) => {
+EmbeddedConsole.createController = async (req, res) => {
  // Step 1. Check the token
  // At this point we should have a good token. But we
  // double-check here to enable a better UX to the user.
@@ -37,31 +36,21 @@ eg011EmbeddedSending.createController = async (req, res) => {
 
  // Step 2. Call the worker method
  let body = req.body
-     // Additional data validation might also be appropriate
-   , signerEmail = validator.escape(body.signerEmail)
-   , signerName = validator.escape(body.signerName)
-   , ccEmail = validator.escape(body.ccEmail)
-   , ccName = validator.escape(body.ccName)
+   // Additional data validation might also be appropriate
    , startingView = validator.escape(body.startingView)
-   , envelopeArgs = {
-         signerEmail: signerEmail,
-         signerName: signerName,
-         ccEmail: ccEmail,
-         ccName: ccName,
-         dsReturnUrl: dsReturnUrl,
-     }
    , args = {
          accessToken: req.user.accessToken,
          basePath: req.session.basePath,
          accountId: req.session.accountId,
+         dsReturnUrl: dsReturnUrl,
          startingView: startingView,
-         envelopeArgs: envelopeArgs
+         envelopeId: req.session.envelopeId // may be undefined
      }
    , results = null
    ;
 
  try {
-     results = await eg011EmbeddedSending.worker (args)
+     results = await eg012EmbeddedConsole.worker (args)
  }
  catch (error) {
      let errorBody = error && error.response && error.response.body
@@ -74,7 +63,7 @@ eg011EmbeddedSending.createController = async (req, res) => {
      res.render('pages/error', {err: error, errorCode: errorCode, errorMessage: errorMessage});
  }
  if (results) {
-     // Redirect the user to the Sender View
+     // Redirect the user to the NDSE View
      // Don't use an iFrame!
      // State can be stored/recovered using the framework's session or a
      // query parameter on the returnUrl (see the makeSenderViewRequest method)
@@ -83,54 +72,50 @@ eg011EmbeddedSending.createController = async (req, res) => {
 }
 
 /**
-* This function does the work of creating the envelope in
-* draft mode and returning a URL for the sender's view
+* This function does the work of returning a URL for the NDSE view
 * @param {object} args object
 */
 // ***DS.snippet.0.start
-eg011EmbeddedSending.worker = async (args) => {
+EmbeddedConsole.worker = async (args) => {
  // Data for this method
  // args.basePath
  // args.accessToken
  // args.accountId
- // args.startingView -- 'recipient' or 'tagging'
+ // args.dsReturnUrl
+ // args.startingView
+ // args.envelopeId
 
  let dsApiClient = new docusign.ApiClient();
  dsApiClient.setBasePath(args.basePath);
  dsApiClient.addDefaultHeader('Authorization', 'Bearer ' + args.accessToken);
  let envelopesApi = new docusign.EnvelopesApi(dsApiClient);
 
- // Step 1. Make the envelope with "created" (draft) status
- args.envelopeArgs.status = "created"; // We want a draft envelope
- let results = await eg002.worker(args)
-   , envelopeId = results.envelopeId;
-
- // Step 2. create the sender view
- let viewRequest = makeSenderViewRequest(args.envelopeArgs);
+ // Step 1. create the NDSE view
+ let viewRequest = makeConsoleViewRequest(args);
  // Call the CreateSenderView API
  // Exceptions will be caught by the calling function
- results = await envelopesApi.createSenderView(
-     args.accountId, envelopeId,
-     {returnUrlRequest: viewRequest});
-
- // Switch to Recipient and Documents view if requested by the user
+ let results = await envelopesApi.createConsoleView(
+     args.accountId, {consoleViewRequest: viewRequest});
  let url = results.url;
- console.log (`startingView: ${args.startingView}`);
- if (args.startingView === "recipient") {
-     url = url.replace('send=1', 'send=0');
- }
-
- return ({envelopeId: envelopeId, redirectUrl: url})
+ console.log (`NDSE view URL: ${url}`);
+ return ({redirectUrl: url})
 }
 
-function makeSenderViewRequest(args) {
- let viewRequest = new docusign.ReturnUrlRequest();
+function makeConsoleViewRequest(args) {
  // Data for this method
  // args.dsReturnUrl
+ // args.startingView
+ // args.envelopeId
 
- // Set the url where you want the recipient to go once they are done signing
- // should typically be a callback route somewhere in your app.
+ let viewRequest = new docusign.ConsoleViewRequest();
+ // Set the url where you want the recipient to go once they are done
+ // with the NDSE. It is usually the case that the
+ // user will never "finish" with the NDSE.
+ // Assume that control will not be passed back to your app.
  viewRequest.returnUrl = args.dsReturnUrl;
+ if (args.startingView == "envelope" && args.envelopeId) {
+     viewRequest.envelopeId = args.envelopeId
+ }
  return viewRequest
 }
 // ***DS.snippet.0.end
@@ -139,15 +124,16 @@ function makeSenderViewRequest(args) {
 /**
 * Form page for this application
 */
-eg011EmbeddedSending.getController = (req, res) => {
+EmbeddedConsole.getController = (req, res) => {
  // Check that the authentication token is ok with a long buffer time.
  // If needed, now is the best time to ask the user to authenticate
  // since they have not yet entered any information into the form.
  let tokenOK = req.dsAuth.checkToken();
  if (tokenOK) {
-     res.render('pages/examples/eg011EmbeddedSending', {
+     res.render('components/EmbeddedConsole', {
          eg: eg, csrfToken: req.csrfToken(),
-         title: "Signing request by email",
+         title: "Embedded DocuSign web tool",
+         envelopeOk: req.session.envelopeId,
          sourceFile: path.basename(__filename),
          sourceUrl: dsConfig.githubExampleUrl + path.basename(__filename),
          documentation: dsConfig.documentation + eg,
@@ -159,3 +145,5 @@ eg011EmbeddedSending.getController = (req, res) => {
      res.redirect(mustAuthenticate);
  }
 }
+
+
