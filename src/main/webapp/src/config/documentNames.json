@@ -1,7 +1,7 @@
 {
-    "node": {
-        "eg001": "EmbeddedSigning.js",
-        "eg011": "EmbeddedSending.js",
-        "eg012": "EmbeddedConsole.js"
-    }
+  "node": {
+    "eg001": "EmbeddedSigning.js",
+    "eg011": "EmbeddedSending.js",
+    "eg012": "EmbeddedConsole.js"
+  }
 }
