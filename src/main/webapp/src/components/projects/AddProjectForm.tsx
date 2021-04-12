@@ -14,10 +14,8 @@ const AddProjectForm = (props: any) => {
       onSubmit={(event: { preventDefault: () => void }) => {
         event.preventDefault();
         if (!project.projectName) {
-          console.log("returning");
           return;
         }
-        console.log("adding project");
         props.addProject(project);
         setProject(initialFormState);
       }}
