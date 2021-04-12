@@ -9,7 +9,7 @@ function App() {
   const [projectState, setProjectState] = useState<Project[]>([]);
 
   useEffect(() => {
-    fetch("/api/projects/100")
+    fetch("/api/projects/100", { method: "GET", redirect: "manual" })
       .then((res) => res.json())
       .then((data) => {
         setProjectState(data);
