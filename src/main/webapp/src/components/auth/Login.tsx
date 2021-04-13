@@ -5,6 +5,10 @@ export default function Login() {
     <div>
       <BtButton text="Homeowner" link="/login" />
       <BtButton text="Builder" link="/login" />
+      <div>
+        <i> Not registered? </i>
+        <BtButton text="Registration" link="https://go.docusign.com/sandbox/productshot/" />
+      </div>
     </div>
   );
 }
