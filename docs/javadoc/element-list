@@ -1,0 +1,10 @@
+edu.unomaha.docusign
+edu.unomaha.docusign.auth
+edu.unomaha.docusign.config
+edu.unomaha.docusign.project.dao
+edu.unomaha.docusign.project.ejb
+edu.unomaha.docusign.project.entities
+edu.unomaha.docusign.project.interfaces
+edu.unomaha.docusign.project.rest
+edu.unomaha.docusign.logging
+edu.unomaha.docusign.user

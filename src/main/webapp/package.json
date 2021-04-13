@@ -1,0 +1,62 @@
+{
+  "name": "docusign-client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^12.7.1",
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.31",
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-icons": "^4.2.0",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.2",
+    "typescript": "^4.2.2",
+    "web-vitals": "^1.1.0"
+  },
+  "scripts": {
+    "pre-run": "npm install",
+    "doc": "react-doc-generator ./src -o DOCUMENTATION.md -x js,jsx,ts,tsx",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "npx react-scripts test --transformIgnorePatterns \"node_modules\"",
+    "eject": "react-scripts eject",
+    "start:dev": "webpack serve --config ./webpack.config.js --hot --inline"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "engines": {
+    "node": "*"
+  },
+  "proxy": "http://localhost:8080",
+  "devDependencies": {
+    "@types/react-router-dom": "^5.1.7",
+    "css-loader": "^4.3.0",
+    "react-doc-generator": "^1.2.5",
+    "react-docgen": "^5.3.1",
+    "ts-loader": "^8.1.0",
+    "webpack-cli": "^4.6.0"
+  }
+}

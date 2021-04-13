@@ -1,0 +1,41 @@
+{
+  "recipients":{
+    "signers":[
+      {
+        "tabs":{
+          "signHereTabs":[
+            {
+              "stampType":"signature",
+              "name":"SignHere",
+              "tabLabel":"signatureTab",
+              "scaleValue":"1",
+              "optional":"false",
+              "documentId":"1",
+              "recipientId":"1",
+              "pageNumber":"1",
+              "xPosition":"73",
+              "yPosition":"440"
+            }
+          ]
+        },
+        "name":"Example J Simpson",
+        "email":"ejs@example.com",
+        "clientUserId":"ejs@example.com",
+        "recipientId":"1",
+        "routingOrder":"1"
+      }
+    ]
+  },
+  "status":"sent",
+  "emailSubject":"Example Signing Document",
+  "Documents":[
+    {
+      "htmlDefinition":
+      {
+        "source": "<html><body><div>Sign this document</div></body></html>"
+      },
+      "documentId": "1",
+      "name": "doc1.html"
+    }
+  ]
+}
