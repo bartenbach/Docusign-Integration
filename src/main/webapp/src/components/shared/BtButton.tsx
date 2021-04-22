@@ -5,6 +5,7 @@ export const BtButton: React.FC<Props> = (props) => {
   return (
     <Box m={1} display="inline-block">
       <Button
+        className={props.className}
         variant="contained"
         color="primary"
         href={props.link}
@@ -22,6 +23,7 @@ interface Props {
   link: string;
   type?: string;
   clickfn?: any;
+  className?: string;
 }
 
 export default BtButton;

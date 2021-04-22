@@ -27,6 +27,7 @@ sourceSets {
     }
 }
 
+
 javadoc {
     source = sourceSets.main.allJava
 }
@@ -38,7 +39,8 @@ dependencies {
     implementation 'org.springframework.security:spring-security-test'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	runtimeOnly 'com.h2database:h2'
+    implementation group: 'com.docusign', name: 'docusign-esign-java', version: '3.12.0-RC1'
+    runtimeOnly 'com.h2database:h2'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
@@ -55,54 +57,49 @@ test {
   useJUnitPlatform()
 }
 
-task buildReactApp(type: NpxTask){
-    dependsOn npmInstall
+task buildReactApp(type: NpxTask, dependsOn: 'npmInstall'){
     description = "Builds React client"
     workingDir = file("${project.projectDir}/src/main/webapp")
     command = 'npx'
-    args = ['react-scripts', 'build']
+    args = ['react-scripts', 'build', '--mode', 'development']
     inputs.files('package.json', 'package-lock.json')
     inputs.dir(fileTree("${project.projectDir}/src/main/webapp/node_modules").exclude(".cache"))
 }
 
-npm_test {
+task npm_test(type: NpxTask) {
     description = "Runs javascript tests with npm"
     workingDir = file("${project.projectDir}/src/main/webapp")
     environment = ['CI': 'true']
 }
 
+clean {
+    println "deleting node_modules"
+    delete 'src/main/webapp/node_modules'
+}
+
 task cleanClient(type: Delete) {
+    println "cleaning client"
     delete "${project.projectDir}/src/main/resources/static/*"
     delete "${project.projectDir}/src/main/webapp/build/*"
 }
 
+bootRun.dependsOn buildReactApp
+
 task deployClient(type: Copy) {
-   cleanClient
+   println "deploying client"
    from "${project.projectDir}/src/main/webapp/build"
    into "${project.projectDir}/src/main/resources/static"
 }
 
-task buildClient() {
-    dependsOn npmInstall
-    dependsOn buildReactApp
-//    dependsOn npm_test
-}
+deployClient.mustRunAfter buildReactApp
 
-task buildServer() {
-    dependsOn compileJava
-    dependsOn compileTestJava
-}
+npmInstall.dependsOn clean
+buildReactApp.dependsOn cleanClient
+bootRun.dependsOn deployClient
+compileJava.dependsOn deployClient
 
-clean {
-    delete 'src/main/webapp/node_modules'
-}
-
-bootRun.dependsOn npmInstall
-//bootRun.dependsOn npm_test
-bootRun.dependsOn buildReactApp
 bootRun.dependsOn compileJava
 bootRun.dependsOn compileTestJava
-bootRun.dependsOn deployClient
-deployClient.dependsOn buildReactApp
+test.dependsOn compileJava
+test.dependsOn compileTestJava
 bootRun.dependsOn test
-bootRun.dependsOn compileJava

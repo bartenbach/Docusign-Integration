@@ -13,7 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import edu.unomaha.docusign.project.entities.Project;
 
 @ExtendWith(MockitoExtension.class)
@@ -21,6 +20,9 @@ public class ProjectDaoTest {
 
     @Mock
     private EntityManager em;
+
+    @Mock
+    private Project project;
 
     @InjectMocks
     private ProjectDao projectDao;

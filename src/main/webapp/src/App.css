@@ -1168,3 +1168,9 @@ caption {
 /**
  * Layout
  */
+
+.logoutButton {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
