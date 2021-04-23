@@ -73,6 +73,13 @@ task npm_test(type: NpxTask) {
     environment = ['CI': 'true']
 }
 
+task startDev(type: NpxTask) {
+    description = "Starts the live development server"
+    command = 'npm'
+    args = ['run', 'start:dev']
+    workingDir = file("${project.projectDir}/src/main/webapp")
+}
+
 clean {
     delete 'src/main/webapp/node_modules'
     delete "${project.projectDir}/src/main/resources/static/*"
