@@ -27,6 +27,7 @@ sourceSets {
     }
 }
 
+
 javadoc {
     source = sourceSets.main.allJava
 }
@@ -38,7 +39,8 @@ dependencies {
     implementation 'org.springframework.security:spring-security-test'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	runtimeOnly 'com.h2database:h2'
+    implementation group: 'com.docusign', name: 'docusign-esign-java', version: '3.12.0-RC1'
+    runtimeOnly 'com.h2database:h2'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
@@ -56,53 +58,62 @@ test {
 }
 
 task buildReactApp(type: NpxTask){
-    dependsOn npmInstall
     description = "Builds React client"
     workingDir = file("${project.projectDir}/src/main/webapp")
     command = 'npx'
-    args = ['react-scripts', 'build']
+    args = ['react-scripts', 'build', '--mode', 'development']
     inputs.files('package.json', 'package-lock.json')
     inputs.dir(fileTree("${project.projectDir}/src/main/webapp/node_modules").exclude(".cache"))
 }
 
-npm_test {
+task npm_test(type: NpxTask) {
     description = "Runs javascript tests with npm"
     workingDir = file("${project.projectDir}/src/main/webapp")
+    command = 'npx'
     environment = ['CI': 'true']
 }
 
-task cleanClient(type: Delete) {
+task startDev(type: NpxTask) {
+    description = "Starts the live development server"
+    command = 'npm'
+    args = ['run', 'start:dev']
+    workingDir = file("${project.projectDir}/src/main/webapp")
+}
+
+clean {
+    delete 'src/main/webapp/node_modules'
     delete "${project.projectDir}/src/main/resources/static/*"
     delete "${project.projectDir}/src/main/webapp/build/*"
 }
 
 task deployClient(type: Copy) {
-   cleanClient
    from "${project.projectDir}/src/main/webapp/build"
    into "${project.projectDir}/src/main/resources/static"
 }
 
 task buildClient() {
-    dependsOn npmInstall
-    dependsOn buildReactApp
-//    dependsOn npm_test
+   dependsOn 'clean'
+   dependsOn 'buildReactApp'
+   dependsOn 'npmInstall'
+   dependsOn 'deployClient' 
+   dependsOn 'npm_test'
+   tasks.findByName('buildReactApp').mustRunAfter 'clean'
+   tasks.findByName('buildReactApp').mustRunAfter 'npmInstall'
+   tasks.findByName('npmInstall').mustRunAfter 'clean'
+   tasks.findByName('deployClient').mustRunAfter 'buildReactApp'
+   tasks.findByName('deployClient').mustRunAfter 'npm_test'
+   tasks.findByName('npm_test').mustRunAfter 'buildReactApp'
 }
 
 task buildServer() {
-    dependsOn compileJava
-    dependsOn compileTestJava
+    dependsOn 'compileJava'
+    dependsOn 'compileTestJava'
 }
 
-clean {
-    delete 'src/main/webapp/node_modules'
+task buildAll() {
+    dependsOn 'buildServer'
+    dependsOn 'buildClient'
+    dependsOn 'bootRun'
+    tasks.findByName('buildServer').mustRunAfter 'buildClient'
+    tasks.findByName('bootRun').mustRunAfter 'buildServer'
 }
-
-bootRun.dependsOn npmInstall
-//bootRun.dependsOn npm_test
-bootRun.dependsOn buildReactApp
-bootRun.dependsOn compileJava
-bootRun.dependsOn compileTestJava
-bootRun.dependsOn deployClient
-deployClient.dependsOn buildReactApp
-bootRun.dependsOn test
-bootRun.dependsOn compileJava
