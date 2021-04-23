@@ -57,7 +57,7 @@ test {
   useJUnitPlatform()
 }
 
-task buildReactApp(type: NpxTask, dependsOn: 'npmInstall'){
+task buildReactApp(type: NpxTask){
     description = "Builds React client"
     workingDir = file("${project.projectDir}/src/main/webapp")
     command = 'npx'
@@ -69,37 +69,44 @@ task buildReactApp(type: NpxTask, dependsOn: 'npmInstall'){
 task npm_test(type: NpxTask) {
     description = "Runs javascript tests with npm"
     workingDir = file("${project.projectDir}/src/main/webapp")
+    command = 'npx'
     environment = ['CI': 'true']
 }
 
 clean {
-    println "deleting node_modules"
     delete 'src/main/webapp/node_modules'
-}
-
-task cleanClient(type: Delete) {
-    println "cleaning client"
     delete "${project.projectDir}/src/main/resources/static/*"
     delete "${project.projectDir}/src/main/webapp/build/*"
 }
 
-bootRun.dependsOn buildReactApp
-
 task deployClient(type: Copy) {
-   println "deploying client"
    from "${project.projectDir}/src/main/webapp/build"
    into "${project.projectDir}/src/main/resources/static"
 }
 
-deployClient.mustRunAfter buildReactApp
+task buildClient() {
+   dependsOn 'clean'
+   dependsOn 'buildReactApp'
+   dependsOn 'npmInstall'
+   dependsOn 'deployClient' 
+   dependsOn 'npm_test'
+   tasks.findByName('buildReactApp').mustRunAfter 'clean'
+   tasks.findByName('buildReactApp').mustRunAfter 'npmInstall'
+   tasks.findByName('npmInstall').mustRunAfter 'clean'
+   tasks.findByName('deployClient').mustRunAfter 'buildReactApp'
+   tasks.findByName('deployClient').mustRunAfter 'npm_test'
+   tasks.findByName('npm_test').mustRunAfter 'buildReactApp'
+}
 
-npmInstall.dependsOn clean
-buildReactApp.dependsOn cleanClient
-bootRun.dependsOn deployClient
-compileJava.dependsOn deployClient
+task buildServer() {
+    dependsOn 'compileJava'
+    dependsOn 'compileTestJava'
+}
 
-bootRun.dependsOn compileJava
-bootRun.dependsOn compileTestJava
-test.dependsOn compileJava
-test.dependsOn compileTestJava
-bootRun.dependsOn test
+task buildAll() {
+    dependsOn 'buildServer'
+    dependsOn 'buildClient'
+    dependsOn 'bootRun'
+    tasks.findByName('buildServer').mustRunAfter 'buildClient'
+    tasks.findByName('bootRun').mustRunAfter 'buildServer'
+}
