@@ -70,6 +70,7 @@ task npm_test(type: NpxTask) {
     description = "Runs javascript tests with npm"
     workingDir = file("${project.projectDir}/src/main/webapp")
     command = 'npx'
+    args = ['react-scripts', 'test', '--passWithNoTests']
     environment = ['CI': 'true']
 }
 
