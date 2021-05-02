@@ -44,36 +44,36 @@ public class Project {
         return this.projectId;
     }
 
-    public long getUserId() {
-        return this.userId;
-    }
-
-    public String getProjectName() {
-        return this.projectName;
-    }
-
-    public Date getCreationDate() {
-        return this.creationDate;
-    }
-
-    public Date getLastModified() {
-        return this.lastModified;
-    }
-
     public void setProjectId(long id) {
         this.projectId = id;
+    }
+
+    public long getUserId() {
+        return this.userId;
     }
 
     public void setUserId(long id) {
         this.userId = id;
     }
 
+    public String getProjectName() {
+        return this.projectName;
+    }
+
     public void setProjectName(String name) {
         this.projectName = name;
     }
 
+    public Date getCreationDate() {
+        return this.creationDate;
+    }
+
     public void setCreationDate(Date date) {
         this.creationDate = date;
+    }
+
+    public Date getLastModified() {
+        return this.lastModified;
     }
 
     public void setLastModified(Date date) {

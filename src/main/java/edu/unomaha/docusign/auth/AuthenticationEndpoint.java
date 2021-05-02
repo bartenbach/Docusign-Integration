@@ -1,25 +1,26 @@
-
 package edu.unomaha.docusign.auth;
 
-import org.springframework.stereotype.Controller;
+import com.docusign.esign.model.UserInfo;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.unomaha.docusign.docusign.UserInfoResponse;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class AuthenticationEndpoint {
 
-    private static final String DOCUSIGN_OAUTH_CALLBACK_URL = "/ds/callback";
-
-    @GetMapping(DOCUSIGN_OAUTH_CALLBACK_URL)
-    @ResponseBody
-    public RedirectView getToken(@RequestParam String code, @RequestParam(required = false) String state) {
-        System.out.println("Received authentication token: " + code);
-        return new RedirectView("/");
+    @GetMapping("/user")
+    public String info(@AuthenticationPrincipal OAuth2User principal) {
+        return principal.getName();
     }
 
-    public static String getDocusignOauthCallbackUrl() {
-        return DOCUSIGN_OAUTH_CALLBACK_URL;
+    @GetMapping("/ds/test")
+    ResponseEntity<OAuth2AuthenticationToken> hello(OAuth2AuthenticationToken currentUser) {
+        return ResponseEntity.ok(currentUser);
     }
+
 }

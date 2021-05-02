@@ -8,7 +8,10 @@ import java.util.List;
 public interface ProjectService {
 
     List<Project> getProjectsByUser(long userId);
+
     void persistProject(Project project);
+
     ResponseEntity deleteProject(long projectId);
+
     void addProject(Project project);
 }

@@ -1,18 +1,13 @@
 package edu.unomaha.docusign.project.rest;
 
-import java.util.List;
-
+import edu.unomaha.docusign.project.ejb.ProjectServiceImpl;
+import edu.unomaha.docusign.project.entities.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import edu.unomaha.docusign.project.ejb.ProjectServiceImpl;
-import edu.unomaha.docusign.project.entities.Project;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/projects/")
