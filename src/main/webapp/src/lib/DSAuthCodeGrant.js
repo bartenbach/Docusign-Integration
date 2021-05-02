@@ -9,7 +9,7 @@
  * depending on your use case, you can store and then use the
  * refresh token instead of requiring the user to re-authenticate.
  * @author DocuSign
-*/
+ */
 
 'use strict';
 
@@ -18,23 +18,23 @@ const moment = require('moment')
     , passport = require('passport')
     , baseUriSuffix = '/restapi'
     , tokenReplaceMinGet = 60; // For a form Get, the token must expire at least this number of
-      // minutes later or it will be replaced
+// minutes later or it will be replaced
 
-    ;
+;
 /**
  * Manages OAuth Authentication Code Grant with DocuSign.
  * @constructor
  * @param {object} req - The request object.
  */
 let DSAuthCodeGrant = function _DSAuthCodeGrant(req) {
-  // private globals
-  this._debug_prefix = 'DSAuthCodeGrant';
-  this._accessToken = req.user && req.user.accessToken;   // The bearer token. Get it via #checkToken
-  this._refreshToken = req.user && req.user.refreshToken;   // Note, the refresh token is not used in this example.
-  // For production use, you'd want to store the refresh token in non-volatile storage since it is
-  // good for 30 days. You'd probably want to encrypt it too.
-  this._tokenExpiration = req.user && req.user.tokenExpirationTimestamp;  // when does the token expire?
-  this._debug = true;  // ### DEBUG ### setting
+    // private globals
+    this._debug_prefix = 'DSAuthCodeGrant';
+    this._accessToken = req.user && req.user.accessToken;   // The bearer token. Get it via #checkToken
+    this._refreshToken = req.user && req.user.refreshToken;   // Note, the refresh token is not used in this example.
+    // For production use, you'd want to store the refresh token in non-volatile storage since it is
+    // good for 30 days. You'd probably want to encrypt it too.
+    this._tokenExpiration = req.user && req.user.tokenExpirationTimestamp;  // when does the token expire?
+    this._debug = true;  // ### DEBUG ### setting
 
 } // end of DSAuthCodeGrant constructor function
 
@@ -42,17 +42,17 @@ let DSAuthCodeGrant = function _DSAuthCodeGrant(req) {
 /**
  * Exception when setting an account
  * @constant
-*/
+ */
 DSAuthCodeGrant.prototype.Error_set_account = "Error_set_account";
 /**
  * Exception: Could not find account information for the user
  * @constant
-*/
+ */
 DSAuthCodeGrant.prototype.Error_account_not_found = "Could not find account information for the user";
 /**
  * Exception when getting a token, "invalid grant"
  * @constant
-*/
+ */
 DSAuthCodeGrant.prototype.Error_invalid_grant = 'invalid_grant'; // message when bad client_id is provided
 
 // public functions
@@ -65,7 +65,7 @@ DSAuthCodeGrant.prototype.login = function (req, res, next) {
 
 DSAuthCodeGrant.prototype.oauth_callback1 = (req, res, next) => {
     // This callback URL is used for the login flow
-    passport.authenticate('docusign', { failureRedirect: '/ds/login' })(req, res, next)
+    passport.authenticate('docusign', {failureRedirect: '/ds/login'})(req, res, next)
 }
 DSAuthCodeGrant.prototype.oauth_callback2 = function _oauth_callback2(req, res, next) {
     this._accessToken = req.user.accessToken;
@@ -115,10 +115,12 @@ DSAuthCodeGrant.prototype.oauth_callback2 = function _oauth_callback2(req, res, 
     // Then do the example's GET now.
     // Else redirect to home
     if (req.session.eg) {
-      let eg = req.session.eg;
-      req.session.eg = null;
-      res.redirect(`/${eg}`);
-    } else {res.redirect('/')}
+        let eg = req.session.eg;
+        req.session.eg = null;
+        res.redirect(`/${eg}`);
+    } else {
+        res.redirect('/')
+    }
 }
 
 /**
@@ -126,25 +128,26 @@ DSAuthCodeGrant.prototype.oauth_callback2 = function _oauth_callback2(req, res, 
  * https://account-d.docusign.com/oauth/logout
  * @function
  */
-DSAuthCodeGrant.prototype.logout = function _logout (req, res) {
-  let logoutCB = encodeURIComponent(res.locals.hostUrl + '/ds/logoutCallback')
-    , oauthServer = dsConfig.dsOauthServer
-    , client_id = dsConfig.dsClientId
-    , logoutURL = `${oauthServer}/logout?client_id=${client_id}&redirect_uri=${logoutCB}&response_mode=logout_redirect`
+DSAuthCodeGrant.prototype.logout = function _logout(req, res) {
+    let logoutCB = encodeURIComponent(res.locals.hostUrl + '/ds/logoutCallback')
+        , oauthServer = dsConfig.dsOauthServer
+        , client_id = dsConfig.dsClientId
+        ,
+        logoutURL = `${oauthServer}/logout?client_id=${client_id}&redirect_uri=${logoutCB}&response_mode=logout_redirect`
     ;
-  //console.log (`Redirecting to ${logoutURL}`);
-  //res.redirect(logoutURL);
+    //console.log (`Redirecting to ${logoutURL}`);
+    //res.redirect(logoutURL);
 
-  // Currently, the OAuth logout API method has a bug: ID-3276
-  // Until the bug is fixed, just do a logout from within this app:
-  this.logoutCallback(req, res);
+    // Currently, the OAuth logout API method has a bug: ID-3276
+    // Until the bug is fixed, just do a logout from within this app:
+    this.logoutCallback(req, res);
 }
 
 /**
  * Clears the user information including the tokens.
  * @function
  */
-DSAuthCodeGrant.prototype.logoutCallback = function _logout (req, res) {
+DSAuthCodeGrant.prototype.logoutCallback = function _logout(req, res) {
     req.logout(); // see http://www.passportjs.org/docs/logout/
     this.internalLogout(req, res);
     req.flash('info', 'You have logged out.');
@@ -156,10 +159,10 @@ DSAuthCodeGrant.prototype.logoutCallback = function _logout (req, res) {
  * @function
  */
 DSAuthCodeGrant.prototype.internalLogout = function _internalLogout(req, res) {
-  this._tokenExpiration = null;
-  req.session.accountId = null;
-  req.session.accountName = null;
-  req.session.basePath = null;
+    this._tokenExpiration = null;
+    req.session.accountId = null;
+    req.session.accountName = null;
+    req.session.basePath = null;
 }
 
 /**
@@ -172,7 +175,7 @@ DSAuthCodeGrant.prototype.internalLogout = function _internalLogout(req, res) {
 DSAuthCodeGrant.prototype.getDefaultAccountInfo = function _getDefaultAccountInfo(req) {
     const targetAccountId = dsConfig.targetAccountId
         , accounts = req.user.accounts
-        ;
+    ;
 
     let account = null; // the account we want to use
     // Find the account...
@@ -204,18 +207,24 @@ DSAuthCodeGrant.prototype.getDefaultAccountInfo = function _getDefaultAccountInf
  * @returns boolean tokenOK
  */
 DSAuthCodeGrant.prototype.checkToken = function _checkToken(bufferMin = tokenReplaceMinGet) {
-  let noToken = !this._accessToken || !this._tokenExpiration
-    , now = moment()
-    , needToken = noToken || moment(this._tokenExpiration).subtract(
+    let noToken = !this._accessToken || !this._tokenExpiration
+        , now = moment()
+        , needToken = noToken || moment(this._tokenExpiration).subtract(
         bufferMin, 'm').isBefore(now)
     ;
-  if (this._debug) {
-    if (noToken) {this._debug_log('checkToken: Starting up--need a token')}
-    if (needToken && !noToken) {this._debug_log('checkToken: Replacing old token')}
-    if (!needToken) {this._debug_log('checkToken: Using current token')}
-  }
+    if (this._debug) {
+        if (noToken) {
+            this._debug_log('checkToken: Starting up--need a token')
+        }
+        if (needToken && !noToken) {
+            this._debug_log('checkToken: Replacing old token')
+        }
+        if (!needToken) {
+            this._debug_log('checkToken: Using current token')
+        }
+    }
 
-  return (!needToken)
+    return (!needToken)
 }
 
 /**
@@ -226,7 +235,7 @@ DSAuthCodeGrant.prototype.checkToken = function _checkToken(bufferMin = tokenRep
  * @param string eg The example number that should be started after authentication
  */
 DSAuthCodeGrant.prototype.setEg = function _setEg(req, eg) {
-  req.session.eg = eg
+    req.session.eg = eg
 }
 
 
@@ -236,9 +245,11 @@ DSAuthCodeGrant.prototype.setEg = function _setEg(req, eg) {
  * @param {string} m The message to be printed
  * @private
  */
-DSAuthCodeGrant.prototype._debug_log = function(m){
-  if (!this._debug) {return}
-  console.log(this._debug_prefix + ': ' + m)
+DSAuthCodeGrant.prototype._debug_log = function (m) {
+    if (!this._debug) {
+        return
+    }
+    console.log(this._debug_prefix + ': ' + m)
 }
 
 /**
@@ -248,9 +259,11 @@ DSAuthCodeGrant.prototype._debug_log = function(m){
  * @param {object} obj The object to be pretty-printed
  * @private
  */
-DSAuthCodeGrant.prototype._debug_log_obj = function (m, obj){
-  if (!this._debug) {return}
-  console.log(this._debug_prefix + ': ' + m + "\n" + JSON.stringify(obj, null, 4))
+DSAuthCodeGrant.prototype._debug_log_obj = function (m, obj) {
+    if (!this._debug) {
+        return
+    }
+    console.log(this._debug_prefix + ': ' + m + "\n" + JSON.stringify(obj, null, 4))
 }
 
 

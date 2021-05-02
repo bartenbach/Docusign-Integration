@@ -1,4 +1,4 @@
-package edu.unomaha.docusign;
+package edu.unomaha.docusign.auth;
 
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
@@ -22,11 +22,12 @@ public abstract class ApiBinding {
         }
     }
 
-    private ClientHttpRequestInterceptor getBearerTokenInterceptor(String accessToken) {
-        ClientHttpRequestInterceptor interceptor = new ClientHttpRequestInterceptor() {
+    private ClientHttpRequestInterceptor
+    getBearerTokenInterceptor(String accessToken) {
+        ClientHttpRequestInterceptor interceptor =
+                new ClientHttpRequestInterceptor() {
                     @Override
-                    public ClientHttpResponse intercept(HttpRequest request, byte[] bytes,
-                                                        ClientHttpRequestExecution execution) throws IOException {
+                    public ClientHttpResponse intercept(HttpRequest request, byte[] bytes, ClientHttpRequestExecution execution) throws IOException {
                         request.getHeaders().add("Authorization", "Bearer " + accessToken);
                         return execution.execute(request, bytes);
                     }
@@ -37,10 +38,8 @@ public abstract class ApiBinding {
     private ClientHttpRequestInterceptor getNoTokenInterceptor() {
         return new ClientHttpRequestInterceptor() {
             @Override
-            public ClientHttpResponse intercept(HttpRequest request, byte[] bytes,
-                                                ClientHttpRequestExecution execution) {
-                throw new IllegalStateException(
-                        "Can't access the API without an access token");
+            public ClientHttpResponse intercept(HttpRequest request, byte[] bytes, ClientHttpRequestExecution execution) throws IOException {
+                throw new IllegalStateException("Can't access the API without an access token");
             }
         };
     }
