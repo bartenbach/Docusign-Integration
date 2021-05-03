@@ -1,6 +1,3 @@
-import BtButton from "./shared/BtButton";
-import "../App.css";
-
 export default function EmbeddedSending() {
     return (
         <div className="container">
@@ -67,7 +64,7 @@ export default function EmbeddedSending() {
                     ></input>
                 </div>
                 <input type="hidden" name="_csrf" value="<%- csrfToken %>"></input>
-                <BtButton text="Submit" link="/"/>
+                <button type="submit" className="btn btn-docu">Submit</button>
             </form>
         </div>
     );

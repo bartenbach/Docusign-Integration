@@ -1,6 +1,3 @@
-import BtButton from "./shared/BtButton";
-import "../App.css";
-
 export default function EmbeddedConsole() {
     return (
         <div className="container">
@@ -24,7 +21,7 @@ export default function EmbeddedConsole() {
                     </select>
                 </div>
                 <input type="hidden" name="_csrf" value="<%- csrfToken %>"></input>
-                <BtButton text="Submit" link="/"/>
+                <button type="submit" className="btn btn-docu">Submit</button>
             </form>
         </div>
     );
