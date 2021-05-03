@@ -1,6 +1,5 @@
 package edu.unomaha.docusign.core.common;
 
-/*
 import java.util.Locale;
 import java.lang.reflect.Field;
 
@@ -13,7 +12,7 @@ import lombok.Value;
  * This class represents 'diff' between values of two objects. The 'diff' is a
  * simple object consists field name and fields value of comparing objects. The
  * value is represented as a string.
- *
+ */
 @Value
 public class DiffField {
 
@@ -28,7 +27,7 @@ public class DiffField {
      * @param right the second comparing object, can be <code>null</code>
      * @return created object containing field name and string representation of values
      * @throws IllegalAccessException when an application tries to reflectively get a field
-     *
+     */
     public static DiffField create(Field field, Object left, Object right) throws IllegalAccessException {
         field.setAccessible(true);
         return new DiffField(field.getName(), getValue(field, left), getValue(field, right));
@@ -42,7 +41,7 @@ public class DiffField {
      * @param right the second comparing object, can be <code>null</code>
      * @return created object containing field name and string representation of values
      * @throws IllegalAccessException when an application tries to reflectively get a field
-     *
+     */
     public static DiffField createWithFormattedName(Field field, Object left, Object right)
             throws IllegalAccessException {
         field.setAccessible(true);
@@ -55,7 +54,7 @@ public class DiffField {
      * "permission profile name" string.
      * @param name the name of the field
      * @return formatted name
-     *
+     */
     public static String formatMemberName(String name) {
         String[] tokens = StringUtils.splitByCharacterTypeCamelCase(name);
         return String.join(" ", tokens).toLowerCase(Locale.ENGLISH);
@@ -69,4 +68,4 @@ public class DiffField {
     }
 
 
-}*/
+}

@@ -1,6 +1,3 @@
-import "../App.css";
-import BtButton from "./shared/BtButton";
-
 export default function EmbeddedSigning() {
     return (
         <div className="container">
@@ -13,26 +10,20 @@ export default function EmbeddedSigning() {
             <form className="eg" action="" method="post" data-busy="form">
                 <div className="form-group">
                     <label htmlFor="signerEmail">Signer Email</label>
-                    <input
-                        type="email"
-                        className="form-control"
-                        id="signerEmail"
-                        name="signerEmail"
-                        placeholder="email@domain.com"
-                    ></input>
+                    <input type="email" className="form-control"  id="signerEmail"
+                        name="signerEmail" placeholder="email@domain.com" required >
+                    </input>
+                    <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
                 </div>
                 <div className="form-group">
                     <label htmlFor="signerName">Signer Name</label>
                     <input
-                        type="test"
-                        className="form-control"
-                        id="signerName"
-                        placeholder="FirstName LastName"
-                        name="signerName"
-                    ></input>
+                        type="test" className="form-control" id="signerName"
+                        placeholder="FirstName LastName" name="signerName" required>
+                    </input>
                 </div>
-                <input type="hidden" name="_csrf" value="<%- csrfToken %>"></input>
-                <BtButton text="Submit" link="/"/>
+                <input type="hidden" name="_csrf" value="${csrfToken}"></input>
+                <button type="submit" className="btn btn-docu">Submit</button>
             </form>
         </div>
     );

@@ -1,6 +1,6 @@
-package edu.unomaha.docusign.docusign;
+package edu.unomaha.docusign.controller;
 
-import edu.unomaha.docusign.docusign.DSConfiguration;
+import edu.unomaha.docusign.DSConfiguration;
 import edu.unomaha.docusign.core.controller.AbstractController;
 import com.docusign.esign.api.AccountsApi;
 import com.docusign.esign.api.EnvelopesApi;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Controller;
 public abstract class AbstractEsignatureController extends AbstractController {
 
     protected static final String MODEL_ENVELOPE_OK = "envelopeOk";
-    private static final String EXAMPLE_PAGES_PATH = "pages/esignature/examples/";
+    private static final String EXAMPLE_PAGES_PATH = "pages/esignature/";
 
     public AbstractEsignatureController(DSConfiguration config, String exampleName, String title) {
         super(config, exampleName, title);

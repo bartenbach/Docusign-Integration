@@ -1,8 +1,7 @@
 package edu.unomaha.docusign.common;
 
 public enum ApiIndex {
-    ESIGNATURE("/pages/esignature/index", "/restapi");
-
+    ESIGNATURE("/components/esignature/index", "/restapi");
     private final String indexPath;
     private final String baseUrlSuffix;
 

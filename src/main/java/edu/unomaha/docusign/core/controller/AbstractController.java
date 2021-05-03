@@ -1,6 +1,6 @@
 package edu.unomaha.docusign.core.controller;
 
-import edu.unomaha.docusign.docusign.DSConfiguration;
+import edu.unomaha.docusign.DSConfiguration;
 import edu.unomaha.docusign.common.WorkArguments;
 import edu.unomaha.docusign.core.model.DoneExample;
 import edu.unomaha.docusign.core.model.Session;

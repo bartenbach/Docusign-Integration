@@ -1,5 +1,5 @@
 package edu.unomaha.docusign.core.common;
-/*
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public final class Utils {
      * @return list of {@link DiffField} objects
      * @throws IllegalArgumentException if both of comparable objects is
      * <code>null</code> or if objects belong to different classes
-     *
+     */
     public static List<DiffField> compareFields(Object left, Object right, boolean formatName) {
         if (left == null && right == null) {
             throw new IllegalArgumentException("Both comparing objects are null");
@@ -66,7 +66,7 @@ public final class Utils {
      * @return list of {@link DiffField} objects
      * @throws IllegalArgumentException if both of comparable objects is
      * <code>null</code> or if objects belong to different classes
-     *
+     */
     public static List<DiffField> findDifferentFields(Object left, Object right, boolean formatName) {
         return compareFields(left, right, formatName)
                 .stream()
@@ -74,4 +74,3 @@ public final class Utils {
                 .collect(Collectors.toList());
     }
 }
-*/
