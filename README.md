@@ -5,7 +5,7 @@ Capstone project for UNO with BuilderTrend
 Build the client: `gradle bC` or `gradle buildClient`
 Build the server: `gradle bS` or `gradle buildServer`
 Build everything and run springboot: `gradle bA` or `gradle buildAll`
-Start webpack live development server: `gradle sD` or `grade startDev`
+Start webpack live development server: `gradle sD` or `gradle startDev`
 
 Once the server is up, proceed to http://localhost:8080 or http://localhost:3000 if you started the webpack server
 
@@ -14,3 +14,6 @@ Projects endpoint:
 `/api/projects/{id}`
 
 Supported methods: `GET`, `POST`, `DELETE`
+
+#### Docusign Prototype Server API Doc
+https://bartenbach.io/Docusign-Integration/
