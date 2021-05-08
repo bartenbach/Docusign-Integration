@@ -1,10 +1,10 @@
 package edu.unomaha.docusign.auth;
 
 import com.docusign.esign.client.ApiException;
+import com.docusign.esign.model.EnvelopeDefinition;
 import edu.unomaha.docusign.docusign.DocusignEndpoint;
 import edu.unomaha.docusign.docusign.EnvelopeHandler;
 import edu.unomaha.docusign.docusign.EnvelopeResponse;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
 
@@ -21,9 +21,11 @@ public class Docusign extends ApiBinding {
         return restTemplate.getForObject(DocusignEndpoint.getBasePath() + "/envelopes?from_date=2020-01-01", EnvelopeResponse.class);
     }
 
-    public RedirectView sendEnvelope() throws IOException, ApiException {
+    public EnvelopeResponse sendEnvelope() throws IOException {
         EnvelopeHandler envelopeHandler = new EnvelopeHandler();
-        return envelopeHandler.sendEnvelope(accessToken);
+        // TODO these shouldn't be hardcoded
+        EnvelopeDefinition envelope = envelopeHandler.makeEnvelope("blakebartenbach@gmail.com", "Blake Bartenbach");
+        return restTemplate.postForObject(DocusignEndpoint.getBasePath() + "/envelopes", envelope, EnvelopeResponse.class);
     }
 
 }
