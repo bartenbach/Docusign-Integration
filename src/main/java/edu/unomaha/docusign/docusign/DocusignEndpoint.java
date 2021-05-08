@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
 
@@ -16,11 +15,11 @@ public class DocusignEndpoint {
 
     private static final String AUTHENTICATION_SCOPE = "signature";
     private static final String DOCUSIGN_API_ENDPOINT = "https://account-d.docusign.com/oauth";
-    private static final String BASE_URI = "https://demo.docusign.net";
+    private static final String BASE_URI = "https://demo.docusign.net/restapi";
     private static final String REGISTRATION_ID = "docusign";
     private static final String CLIENT_ID = "5f178629-92f1-431f-a323-3b6852e823a0";
     private static final String CLIENT_SECRET = "8f02b844-499f-460f-bda9-f354f5f2ce05";
-    private static final String DOCUSIGN_API_PATH = "/restapi/2.1/accounts/";
+    private static final String DOCUSIGN_API_PATH = "/2.1/accounts/";
     private static final String ACCOUNT_ID = "55788584-a2f9-4396-8858-69844d1590d5";
 
     @Autowired
@@ -46,13 +45,15 @@ public class DocusignEndpoint {
     public String getEnvelopes() throws IOException {
         EnvelopeResponse envelopeResponse = docusign.getEnvelopes();
         if (envelopeResponse.getResultSetSize() > 0) {
-            return "You currently have " + envelopeResponse.getResultSetSize() + " envelopes";
+            String envelope = envelopeResponse.getNextUri();
+            return "You currently have an envelope:\n\t" + envelopeResponse.getNextUri();
+
         }
-        return "No envelopes found for current user";
+        return "You currently don't have any envelopes.";
     }
 
     @GetMapping("/envelopes/send")
-    public RedirectView sendEnvelope() throws IOException, ApiException {
+    public EnvelopeResponse sendEnvelope() throws IOException {
         return docusign.sendEnvelope();
     }
 
