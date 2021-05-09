@@ -30,7 +30,6 @@ public class ProjectEndpoint {
     @RequestMapping(path = "/{id}", method = RequestMethod.POST)
     public void addProject(@RequestBody Project project) {
         service.addProject(project);
-        System.out.println("POST endpoint hit");
     }
 
 }
