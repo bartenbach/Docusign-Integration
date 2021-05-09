@@ -41,14 +41,13 @@ public class DocusignEndpoint {
     }
 
     @GetMapping("/envelopes/get")
-    public String getEnvelopes() throws IOException {
-        GetEnvelopeResponse createEnvelopeResponse = docusign.getEnvelopes();
-        if (createEnvelopeResponse.getResultSetSize() > 0) {
-            String envelope = createEnvelopeResponse.getNextUri();
-            return "You currently have an envelope:\n\t" + createEnvelopeResponse.getNextUri();
+    public GetEnvelopeResponse getEnvelopes() throws IOException {
+        GetEnvelopeResponse getEnvelopeResponse = docusign.getEnvelopes();
+        if (getEnvelopeResponse.getResultSetSize() > 0) {
+            return getEnvelopeResponse;
 
         }
-        return "You currently don't have any envelopes.";
+        return null;
     }
 
     @GetMapping("/envelopes/send")
