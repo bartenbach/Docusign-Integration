@@ -6,6 +6,6 @@ jobs:
       script:
         - ./gradlew buildClient
     - language: java
-      jdk: openjdk15
+      jdk: openjdk16
       script:
         - ./gradlew buildServer
