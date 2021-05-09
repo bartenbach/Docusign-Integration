@@ -1,6 +1,5 @@
 package edu.unomaha.docusign.docusign;
 
-import com.docusign.esign.client.ApiException;
 import edu.unomaha.docusign.auth.Docusign;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,17 +42,17 @@ public class DocusignEndpoint {
 
     @GetMapping("/envelopes/get")
     public String getEnvelopes() throws IOException {
-        EnvelopeResponse envelopeResponse = docusign.getEnvelopes();
-        if (envelopeResponse.getResultSetSize() > 0) {
-            String envelope = envelopeResponse.getNextUri();
-            return "You currently have an envelope:\n\t" + envelopeResponse.getNextUri();
+        GetEnvelopeResponse createEnvelopeResponse = docusign.getEnvelopes();
+        if (createEnvelopeResponse.getResultSetSize() > 0) {
+            String envelope = createEnvelopeResponse.getNextUri();
+            return "You currently have an envelope:\n\t" + createEnvelopeResponse.getNextUri();
 
         }
         return "You currently don't have any envelopes.";
     }
 
     @GetMapping("/envelopes/send")
-    public EnvelopeResponse sendEnvelope() throws IOException {
+    public CreateEnvelopeResponse sendEnvelope() throws IOException {
         return docusign.sendEnvelope();
     }
 

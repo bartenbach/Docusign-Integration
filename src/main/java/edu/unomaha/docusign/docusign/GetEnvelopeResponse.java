@@ -1,6 +1,6 @@
 package edu.unomaha.docusign.docusign;
 
-public class EnvelopeResponse {
+public class GetEnvelopeResponse {
 
     private int resultSetSize;
     private int totalSetSize;
